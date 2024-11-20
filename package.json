@@ -1,0 +1,39 @@
+{
+  "name": "back-end",
+  "version": "1.0.0",
+  "description": "Peek back-end code",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Peek-app/back-end.git"
+  },
+  "keywords": [
+    "back-end",
+    "pet",
+    "pets",
+    "express",
+    "node",
+    "js",
+    "mongoDB"
+  ],
+  "author": "Peek-app",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Peek-app/back-end/issues"
+  },
+  "homepage": "https://github.com/Peek-app/back-end#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "helmet": "^8.0.0",
+    "http-errors": "^2.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.8.2"
+  }
+}
