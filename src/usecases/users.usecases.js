@@ -22,6 +22,36 @@ async function create(data) {
   return newUser;
 }
 
+
+async function getAll() {
+  const users = await User.find({});
+  return users;
+}
+
+async function getById(id) {
+  const user = await User.findById(id);
+  return user;
+}
+
+async function deleteById(id) {
+  const existingUser = await User.findById(id);
+  if (!existingUser) {
+    throw createError(404, "user not found");
+  }
+  const userDelted = await User.findByIdAndDelete(id);
+  return userDelted;
+}
+
+async function updateById(id, data) {
+  const existingUser = await User.findById(id);
+  if (!existingUser) {
+    throw createError(404, "user not found");
+  }
+  const user = await User.findByIdAndUpdate(id, data);
+  return user;
+}
+
+
 async function login(data) {
   const user = await User.findOne({ email: data.email }).select("+password");
 
@@ -38,9 +68,14 @@ async function login(data) {
   const token = jwt.sign({ id: user._id });
 
   return { token, userId: user._id };
+
 }
 
 module.exports = {
   create,
+  getAll,
+  getById,
+  updateById,
+  deleteById,
   login,
 };
