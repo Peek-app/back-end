@@ -22,6 +22,38 @@ async function create(data) {
   return newUser;
 }
 
+async function getAll() {
+  const users = await User.find({});
+  return users;
+}
+
+async function getById(id) {
+  const user = await User.findById(id);
+  return user;
+}
+
+async function deleteById(id) {
+  const existingUser = await User.findById(id);
+  if (!existingUser) {
+    throw createError(404, "user not found");
+  }
+  const userDelted = await User.findByIdAndDelete(id);
+  return userDelted;
+}
+
+async function updateById(id, data) {
+  const existingUser = await User.findById(id);
+  if (!existingUser) {
+    throw createError(404, "user not found");
+  }
+  const user = await User.findByIdAndUpdate(id, data);
+  return user;
+}
+
 module.exports = {
   create,
+  getAll,
+  getById,
+  updateById,
+  deleteById,
 };
