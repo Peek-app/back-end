@@ -1,5 +1,5 @@
 const User = require("../models/user.model");
-const encription = require("../lib/encription");
+const encryption = require("../lib/encription");
 const createError = require("http-errors");
 const jwt = require("../lib/jwt");
 //const { sign } = require("jsonwebtoken");
@@ -16,12 +16,11 @@ async function create(data) {
     throw createError(400, "Password is too short.");
   }
 
-  const password = encription.encrypt(data.password); //Se debe encriptar
+  const password = encryption.encrypt(data.password); //Se debe encriptar
   data.password = password;
   const newUser = await User.create(data);
   return newUser;
 }
-
 
 async function getAll() {
   const users = await User.find({});
@@ -51,7 +50,6 @@ async function updateById(id, data) {
   return user;
 }
 
-
 async function login(data) {
   const user = await User.findOne({ email: data.email }).select("+password");
 
@@ -68,7 +66,6 @@ async function login(data) {
   const token = jwt.sign({ id: user._id });
 
   return { token, userId: user._id };
-
 }
 
 module.exports = {
