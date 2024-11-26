@@ -9,6 +9,7 @@ const usersRoutes = require("./routes/users.router");
 const vetstRoutes = require("./routes/vets.router");
 const ownersRoutes = require("./routes/owners.router");
 const reviewsRoutes = require("./routes/reviews.routes");
+const petsRoutes = require("./routes/pets.routes");
 
 app.use(
   cors({
@@ -24,6 +25,7 @@ app.use("/users", usersRoutes);
 app.use("/vets", vetstRoutes);
 app.use("/owners", ownersRoutes);
 app.use("/reviews", reviewsRoutes);
+app.use("/pets", petsRoutes);
 
 
 app.get("/", (request, response) => {
