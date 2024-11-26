@@ -30,7 +30,7 @@ app.use("/pets", petsRoutes);
 app.get("/", (request, response) => {
   response.json({
     success: true,
-    message: "Back-End Peek App",
+    message: "Back-End Peek-App",
   });
 });
 
