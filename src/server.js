@@ -2,8 +2,6 @@ const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
 
-
-
 const app = express();
 
 const authRoutes = require("./routes/auth.routes");
@@ -25,11 +23,10 @@ app.use("/users", usersRoutes);
 app.use("/vets", vetstRoutes);
 app.use("/owners", ownersRoutes);
 
-
 app.get("/", (request, response) => {
   response.json({
     success: true,
-    message: "Back-End Peek App",
+    message: "Back-End Peek-App",
   });
 });
 
