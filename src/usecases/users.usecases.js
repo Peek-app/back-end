@@ -42,11 +42,29 @@ async function deleteById(id) {
 }
 
 async function updateById(id, data) {
-  const existingUser = await User.findById(id);
+  const existingUser = await User.findById(id).select("+password");
   if (!existingUser) {
     throw createError(404, "user not found");
   }
-  const user = await User.findByIdAndUpdate(id, data);
+
+  if (data.password) {
+    if (!data.oldPassword) {
+      throw createError(401, "New password is required");
+    }
+    const isValidatePassword = encryption.compare(
+      data.oldPassword,
+      existingUser.password
+    );
+
+    if (!isValidatePassword) {
+      throw createError(401, "Invalid password");
+    }
+
+    const password = encryption.encrypt(data.password); //Se debe encriptar
+    data.password = password;
+  }
+
+  const user = await User.findByIdAndUpdate(id, data, { new: true });
   return user;
 }
 
