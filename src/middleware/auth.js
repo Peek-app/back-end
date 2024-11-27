@@ -7,12 +7,16 @@ async function auth(req, res, next) {
 
     const token = authorization?.replace("Bearer ", "");
 
-    const decoded = await jwt.verify(token);
-    const user = await User.fundById(decoded.id);
+    if (!token) {
+      throw createHttpError(401, "Token is required");
+    }
 
+    const decoded = await jwt.verify(token);
+    const user = await User.findById(decoded.id);
     if (!user) {
       throw createError(401, "Unauthorized");
     }
+
     req.user = user;
     next();
   } catch {

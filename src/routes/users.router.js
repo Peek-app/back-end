@@ -1,6 +1,7 @@
 const express = require("express");
 const userUseCases = require("../usecases/users.usecases");
 const createError = require("http-errors");
+const auth = require("../middleware/auth");
 const router = express.Router();
 
 router.post("/", async (request, response) => {
@@ -59,9 +60,12 @@ router.get("/:id", async (request, response) => {
   }
 });
 
-router.delete("/:id", async (request, response) => {
+router.delete("/:id", auth, async (request, response) => {
   try {
     const id = request.params.id;
+    if (id !== request.user?.id) {
+      throw createError(404, "Only can be deleted by account owner");
+    }
     const userDelted = await userUseCases.deleteById(id);
     response.json({
       success: true,
@@ -77,10 +81,14 @@ router.delete("/:id", async (request, response) => {
   }
 });
 
-router.patch("/:id", async (request, response) => {
+router.patch("/:id", auth, async (request, response) => {
   try {
     const id = request.params.id;
     const userData = request.body;
+
+    if (id !== request.user?.id) {
+      throw createError(404, "Only can be updated your information");
+    }
     userData.updatedAt = new Date();
     const userUpdated = await userUseCases.updateById(id, userData);
     response.json({
