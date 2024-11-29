@@ -2,14 +2,17 @@ const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
 
+const auth = require("./middleware/auth");
+
 const app = express();
 
 const authRoutes = require("./routes/auth.routes");
-const usersRoutes = require("./routes/users.router");
-const vetstRoutes = require("./routes/vets.router");
-const ownersRoutes = require("./routes/owners.router");
+const usersRoutes = require("./routes/users.routes");
+const vetstRoutes = require("./routes/vets.routes");
+const ownersRoutes = require("./routes/owners.routes");
 const reviewsRoutes = require("./routes/reviews.routes");
 const petsRoutes = require("./routes/pets.routes");
+const appointmentsRoutes = require("./routes/appointments.routes");
 
 app.use(
   cors({
@@ -26,6 +29,7 @@ app.use("/vets", vetstRoutes);
 app.use("/owners", ownersRoutes);
 app.use("/reviews", reviewsRoutes);
 app.use("/pets", petsRoutes);
+app.use("/appointments", auth, appointmentsRoutes);
 
 app.get("/", (request, response) => {
   response.json({
