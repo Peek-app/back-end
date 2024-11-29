@@ -14,6 +14,7 @@ const reviewsRoutes = require("./routes/reviews.routes");
 const petsRoutes = require("./routes/pets.routes");
 const appointmentsRoutes = require("./routes/appointments.routes");
 const clinicalProcedure = require("./routes/clinicalProcedures.routes");
+const vaccinesRoutes = require("./routes/vaccines.routes");
 
 app.use(
   cors({
@@ -32,6 +33,7 @@ app.use("/reviews", reviewsRoutes);
 app.use("/pets", petsRoutes);
 app.use("/appointments", auth, appointmentsRoutes);
 app.use("/clinicalProcedures", auth, clinicalProcedure);
+app.use("/vaccines", auth, vaccinesRoutes);
 
 app.get("/", (request, response) => {
   response.json({
