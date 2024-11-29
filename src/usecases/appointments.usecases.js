@@ -15,6 +15,11 @@ async function getAll() {
   return appointments;
 }
 
+async function getById(id) {
+  const appointment = await Appointment.findById(id);
+  return appointment;
+}
+
 async function updateById(id, newData) {
   const existingAppointment = await Appointment.findById(id);
   if (!existingAppointment) {
