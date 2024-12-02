@@ -1,11 +1,26 @@
 const mongoose = require("mongoose");
 
 const vetSchema = mongoose.Schema({
-  professionalId: {
+  email: {
     type: String,
     required: true,
+    match: RegExp("[^@ \t\r\n]+@[^@ \t\r\n]+.[^@ \t\r\n]+"),
+  },
+  password: {
+    type: String,
+    required: true,
+    select: false,
+  },
+  role: {
+    type: Number,
+    required: true,
+    default: 0,
+  },
+  professionalId: {
+    type: Number,
+    required: true,
     minLength: 2,
-    maxLength: 50,
+    maxLength: 8,
   },
   specialtys: {
     type: Array,
@@ -13,7 +28,7 @@ const vetSchema = mongoose.Schema({
   },
   raiting: {
     type: Number,
-    required: true,
+    required: false,
     default: 5,
   },
   user: {
