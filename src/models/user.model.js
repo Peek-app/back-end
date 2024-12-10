@@ -15,7 +15,7 @@ const userSchema = mongoose.Schema({
   },
   profilePic: {
     type: String,
-    required: true,
+    required: false,
   },
   email: {
     type: String,
@@ -24,12 +24,12 @@ const userSchema = mongoose.Schema({
   },
   role: {
     type: Number,
-    required: true,
+    required: false,
     default: 0,
   },
   phone: {
     type: String,
-    required: true,
+    required: false,
     minLength: 2,
     maxLength: 50,
   },
