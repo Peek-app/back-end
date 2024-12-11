@@ -1,18 +1,25 @@
 const express = require("express");
 
 const petsUseCases = require("../usecases/pets.usecases");
+const auth = require("../middleware/auth");
+const jwt = require("../lib/jwt");
 
 const router = express.Router();
 
 router.post("/", async (request, response) => {
   try {
     const petData = request.body;
+    petData.petOwner = request.user._id;
+
     const newPet = await petsUseCases.create(petData);
+
+    const newToken = jwt.sign({ id: request.user._id });
 
     response.json({
       success: true,
       message: "Pet is created",
       data: { pet: newPet },
+      token: newToken,
     });
   } catch (error) {
     response.status(error.status || 500);
