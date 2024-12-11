@@ -1,9 +1,14 @@
 const jwt = require("../lib/jwt");
 const User = require("../models/user.model");
+const createError = require("http-errors");
 
 async function auth(req, res, next) {
   try {
     const authorization = req.headers.authorization;
+
+    if (!authorization) {
+      throw createError(401, "Authorization header is required");
+    }
 
     const token = authorization?.replace("Bearer ", "");
 

@@ -4,7 +4,14 @@ const Pets = require("../models/pets.model");
 const User = require("../models/user.model");
 
 async function create(data) {
-  if (!data) {
+  if (
+    !data.name ||
+    !data.birthday ||
+    !data.typeAnimal ||
+    !data.breed ||
+    !data.picture ||
+    !data.petOwner
+  ) {
     throw createError(400, "All fields are mandatory");
   }
   const pet = await Pets.create(data);
