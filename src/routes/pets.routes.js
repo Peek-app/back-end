@@ -6,13 +6,14 @@ const jwt = require("../lib/jwt");
 
 const router = express.Router();
 
-router.post("/", async (request, response) => {
+router.post("/", auth, async (request, response) => {
   try {
     const petData = request.body;
     petData.petOwner = request.user._id;
 
     const newPet = await petsUseCases.create(petData);
 
+    // Genera un nuevo token
     const newToken = jwt.sign({ id: request.user._id });
 
     response.json({
