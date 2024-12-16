@@ -6,7 +6,7 @@ const jwt = require("../lib/jwt");
 
 const router = express.Router();
 
-router.post("/", async (request, response) => {
+router.post("/", auth, async (request, response) => {
   try {
     const petData = request.body;
     petData.petOwner = request.user._id;
