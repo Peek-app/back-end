@@ -26,7 +26,7 @@ app.use("/users", usersRoutes);
 app.use("/vets", vetstRoutes);
 app.use("/owners", ownersRoutes);
 app.use("/reviews", reviewsRoutes);
-app.use("/pets", petsRoutes);
+app.use("/pets", auth, petsRoutes);
 app.use("/appointments", auth, appointmentsRoutes);
 app.use("/clinicalProcedures", auth, clinicalProcedure);
 app.use("/vaccines", auth, vaccinesRoutes);
