@@ -13,7 +13,6 @@ router.post("/", auth, async (request, response) => {
 
     const newPet = await petsUseCases.create(petData);
 
-    // Genera un nuevo token
     const newToken = jwt.sign({ id: request.user._id });
 
     response.json({
