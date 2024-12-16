@@ -19,7 +19,7 @@ async function create(data) {
 }
 
 async function getAll() {
-  const pets = await Pets.find({}).populate("owner").populate("vet");
+  const pets = await Pets.find({}).populate("petOwner").populate("vet");
   return pets;
 }
 
