@@ -49,11 +49,19 @@ async function updateById(id, newData) {
     throw createError(404, "Pet not found");
   }
 
-  const petUpdated = await Post.findByIdAndUpdate(id, newData, {
+  const petUpdated = await Pets.findByIdAndUpdate(id, newData, {
     new: true,
   });
 
   return petUpdated;
 }
 
-module.exports = { create, getAll, deleteById, updateById };
+async function getById(id) {
+  const pet = await Pets.findById(id).populate("petOwner").populate("vet");
+  if (!pet) {
+    throw createError(404, "Pet not found");
+  }
+  return pet;
+}
+
+module.exports = { create, getAll, deleteById, updateById, getById };
