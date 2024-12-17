@@ -87,4 +87,23 @@ router.patch("/:id", async (request, response) => {
   }
 });
 
+router.get("/:id", async (request, response) => {
+  try {
+    const id = request.params.id;
+    const pet = await petsUseCases.getById(id);
+
+    response.json({
+      success: true,
+      message: "Pet returned",
+      data: { pet },
+    });
+  } catch (error) {
+    response.status(error.status || 500);
+    response.json({
+      success: false,
+      message: error.message,
+    });
+  }
+});
+
 module.exports = router;
