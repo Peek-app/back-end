@@ -5,7 +5,7 @@ const router = express.Router();
 const auth = require("../middleware/auth");
 const vetUseCases = require("../usecases/vets.usecases");
 
-router.post("/", auth, async (request, response) => {
+router.post("/", async (request, response) => {
   try {
     const ownerData = request.body;
     ownerData.user = request.user?.id;
