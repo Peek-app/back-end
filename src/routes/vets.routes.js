@@ -8,10 +8,9 @@ const ownerUseCases = require("../usecases/owners.usecases");
 router.post("/", async (request, response) => {
   try {
     const vetData = request.body;
-    vetData.user = request.user?.id;
 
-    const existingVet = await vetUseCases.getById(vetData.user);
-    const existingOwner = await ownerUseCases.getById(vetData.user);
+    const existingVet = await vetUseCases.getById(request.body.user);
+    const existingOwner = await ownerUseCases.getById(request.body.user);
     if (existingVet || existingOwner) {
       throw createError(404, "User alredy has a role");
     }
