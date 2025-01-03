@@ -51,7 +51,7 @@ router.get("/", async (request, response) => {
 router.delete("/:id", async (request, response) => {
   try {
     const id = request.params.id;
-    const petDeleted = await petsUseCases.deleteReviewById(id);
+    const petDeleted = await petsUseCases.deleteById(id);
 
     response.json({
       success: true,
