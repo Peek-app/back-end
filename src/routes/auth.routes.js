@@ -8,14 +8,14 @@ const router = express.Router();
 router.post("/login", async (req, res, next) => {
   try {
     const data = req.body;
-    const { token, userID } = await usersUseCases.login(data);
+    const { token, userId } = await usersUseCases.login(data);
 
     res.json({
       success: true,
       message: "Logged in",
       data: {
         token,
-        userID,
+        userId,
       },
     });
   } catch (error) {
