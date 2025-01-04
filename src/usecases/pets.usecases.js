@@ -23,20 +23,11 @@ async function getAll() {
   return pets;
 }
 
-async function deleteById(id, userId) {
+async function deleteById(id) {
   const existingPet = await Pets.findById(id);
-  const user = await User.findById(userId.user);
 
   if (!existingPet) {
     throw createError(404, "Pet not found");
-  }
-
-  if (!user) {
-    throw createError(404, "User not found");
-  }
-
-  if (user._id.toString() !== existingPet.user.toString()) {
-    throw createError(403, "You can't delete this pet");
   }
 
   const petDeleted = await Pets.findByIdAndDelete(id);
