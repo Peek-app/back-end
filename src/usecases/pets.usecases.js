@@ -55,6 +55,14 @@ async function getById(id) {
   return pet;
 }
 
+async function getVaccinesByPetId(petId) {
+  const pet = await Pets.findById(petId).populate("vaccines");
+  if (!pet) {
+    throw createError(404, "Pet not found");
+  }
+  return pet.vaccines;
+}
+
 async function getByOwnerId(ownerId) {
   const pets = await Pets.find({ petOwner: ownerId })
     .populate("petOwner")
@@ -77,4 +85,5 @@ module.exports = {
   getById,
   getByOwnerId,
   getByVetId,
+  getVaccinesByPetId,
 };

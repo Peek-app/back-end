@@ -19,6 +19,10 @@ const vaccineSchema = new mongoose.Schema({
     required: false,
     ref: "pets",
   },
+  vet: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Vet",
+  },
   createAt: {
     type: Date,
     default: new Date(),

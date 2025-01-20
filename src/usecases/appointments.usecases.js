@@ -40,4 +40,18 @@ async function deleteById(id) {
   return deletedAppointment;
 }
 
-module.exports = { create, getAll, updateById, deleteById };
+async function getByPetId(petId) {
+  const appointments = await Appointment.find({ petId })
+    .populate("petId")
+    .populate("vetId");
+  return appointments;
+}
+
+module.exports = {
+  create,
+  getAll,
+  updateById,
+  deleteById,
+  getById,
+  getByPetId,
+};
