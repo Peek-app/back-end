@@ -13,13 +13,11 @@ router.post("/", auth, async (request, response) => {
 
     const newPet = await petsUseCases.create(petData);
 
-    const newToken = jwt.sign({ id: request.user._id });
-
     response.json({
       success: true,
       message: "Pet is created",
       data: { pet: newPet },
-      token: newToken,
+      token: res.locals.newToken,
     });
   } catch (error) {
     response.status(error.status || 500);
@@ -38,6 +36,7 @@ router.get("/", async (request, response) => {
       success: true,
       message: "All pets",
       data: { pets },
+      token: res.locals.newToken,
     });
   } catch (error) {
     response.status(error.status || 500);
@@ -51,12 +50,13 @@ router.get("/", async (request, response) => {
 router.delete("/:id", async (request, response) => {
   try {
     const id = request.params.id;
-    const petDeleted = await petsUseCases.deleteReviewById(id);
+    const petDeleted = await petsUseCases.deleteById(id);
 
     response.json({
       success: true,
       message: "Pet deleted",
       data: { pets: petDeleted },
+      token: res.locals.newToken,
     });
   } catch (error) {
     response.status(error.status || 500);
@@ -77,6 +77,7 @@ router.patch("/:id", async (request, response) => {
       success: true,
       message: "Pet updated",
       data: { pets: petUpdated },
+      token: res.locals.newToken,
     });
   } catch (error) {
     response.status(error.status || 500);

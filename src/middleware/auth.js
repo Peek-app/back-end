@@ -10,10 +10,10 @@ async function auth(req, res, next) {
       throw createError(401, "Authorization header is required");
     }
 
-    const token = authorization?.replace("Bearer ", "");
+    const token = authorization.replace("Bearer ", "");
 
     if (!token) {
-      throw createHttpError(401, "Token is required");
+      throw createError(401, "Token is required");
     }
 
     const decoded = await jwt.verify(token);
@@ -22,9 +22,15 @@ async function auth(req, res, next) {
       throw createError(401, "Unauthorized");
     }
 
+    // Genera un nuevo token
+    const newToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "24h",
+    });
+
     req.user = user;
+    res.locals.newToken = newToken;
     next();
-  } catch {
+  } catch (error) {
     res.status(401).json({
       success: false,
       message: "Unauthorized",
