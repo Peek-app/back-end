@@ -55,4 +55,26 @@ async function getById(id) {
   return pet;
 }
 
-module.exports = { create, getAll, deleteById, updateById, getById };
+async function getByOwnerId(ownerId) {
+  const pets = await Pets.find({ petOwner: ownerId })
+    .populate("petOwner")
+    .populate("vet");
+  return pets;
+}
+
+async function getByVetId(vetId) {
+  const pets = await Pets.find({ vet: vetId })
+    .populate("petOwner")
+    .populate("vet");
+  return pets;
+}
+
+module.exports = {
+  create,
+  getAll,
+  deleteById,
+  updateById,
+  getById,
+  getByOwnerId,
+  getByVetId,
+};
