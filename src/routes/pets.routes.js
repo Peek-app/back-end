@@ -107,4 +107,44 @@ router.get("/:id", async (request, response) => {
   }
 });
 
+// Ruta para obtener todas las mascotas relacionadas a un owner
+router.get("/owner/:ownerId", auth, async (request, response) => {
+  try {
+    const ownerId = request.params.ownerId;
+    const pets = await petsUseCases.getByOwnerId(ownerId);
+
+    response.json({
+      success: true,
+      message: "Pets related to owner",
+      data: { pets },
+    });
+  } catch (error) {
+    response.status(error.status || 500);
+    response.json({
+      success: false,
+      message: error.message,
+    });
+  }
+});
+
+// Ruta para obtener todas las mascotas relacionadas a un vet
+router.get("/vet/:vetId", auth, async (request, response) => {
+  try {
+    const vetId = request.params.vetId;
+    const pets = await petsUseCases.getByVetId(vetId);
+
+    response.json({
+      success: true,
+      message: "Pets related to vet",
+      data: { pets },
+    });
+  } catch (error) {
+    response.status(error.status || 500);
+    response.json({
+      success: false,
+      message: error.message,
+    });
+  }
+});
+
 module.exports = router;
