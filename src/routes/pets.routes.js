@@ -1,8 +1,8 @@
 const express = require("express");
 
 const petsUseCases = require("../usecases/pets.usecases");
+const appointmentsUseCases = require("../usecases/appointments.usecases");
 const auth = require("../middleware/auth");
-const jwt = require("../lib/jwt");
 
 const router = express.Router();
 
@@ -137,6 +137,46 @@ router.get("/vet/:vetId", auth, async (request, response) => {
       success: true,
       message: "Pets related to vet",
       data: { pets },
+    });
+  } catch (error) {
+    response.status(error.status || 500);
+    response.json({
+      success: false,
+      message: error.message,
+    });
+  }
+});
+
+// Ruta para obtener todas las vacunas de una mascota
+router.get("/:petId/vaccines", auth, async (request, response) => {
+  try {
+    const petId = request.params.petId;
+    const vaccines = await petsUseCases.getVaccinesByPetId(petId);
+
+    response.json({
+      success: true,
+      message: "Vaccines related to pet",
+      data: { vaccines },
+    });
+  } catch (error) {
+    response.status(error.status || 500);
+    response.json({
+      success: false,
+      message: error.message,
+    });
+  }
+});
+
+// Ruta para obtener todas las citas relacionadas a una mascota
+router.get("/:petId/appointments", auth, async (request, response) => {
+  try {
+    const petId = request.params.petId;
+    const appointments = await appointmentsUseCases.getByPetId(petId);
+
+    response.json({
+      success: true,
+      message: "Appointments related to pet",
+      data: { appointments },
     });
   } catch (error) {
     response.status(error.status || 500);
