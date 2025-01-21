@@ -5,13 +5,12 @@ const usersUseCases = require("../usecases/users.usecases");
 
 const router = express.Router();
 
-router.post("/login", async (request, response, next) => {
+router.post("/login", async (req, res) => {
   try {
-    const data = request.body;
-    const { token, userID } = await usersUseCases.login(data);
+    const data = req.body;
+    const { token, userId } = await usersUseCases.login(data);
 
-
-    response.json({
+    res.json({
       success: true,
       message: "Logged in",
       data: {
@@ -20,13 +19,12 @@ router.post("/login", async (request, response, next) => {
       },
     });
   } catch (error) {
-    response.status(error.status || 500);
-    response.json({
+    res.status(error.status || 500);
+    res.json({
       success: false,
       message: error.message,
     });
   }
-  next();
 });
 
 module.exports = router;
