@@ -16,11 +16,7 @@ const appointmentsRoutes = require("./routes/appointments.routes");
 const clinicalProcedure = require("./routes/clinicalProcedures.routes");
 const vaccinesRoutes = require("./routes/vaccines.routes");
 
-app.use(
-  cors({
-    origin: "http://localhost:3000",
-  })
-);
+app.use(cors());
 
 app.use(helmet());
 app.use(express.json());

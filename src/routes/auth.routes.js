@@ -10,12 +10,13 @@ router.post("/login", async (request, response, next) => {
     const data = request.body;
     const { token, userID } = await usersUseCases.login(data);
 
+
     response.json({
       success: true,
       message: "Logged in",
       data: {
         token,
-        userID,
+        userId,
       },
     });
   } catch (error) {
