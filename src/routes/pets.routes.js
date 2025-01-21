@@ -17,7 +17,7 @@ router.post("/", auth, async (request, response) => {
       success: true,
       message: "Pet is created",
       data: { pet: newPet },
-      token: res.locals.newToken,
+      token: response.locals.newToken,
     });
   } catch (error) {
     response.status(error.status || 500);
