@@ -36,7 +36,7 @@ router.get("/", async (request, response) => {
       success: true,
       message: "All pets",
       data: { pets },
-      token: res.locals.newToken,
+      token: response.locals.newToken,
     });
   } catch (error) {
     response.status(error.status || 500);
@@ -56,7 +56,7 @@ router.delete("/:id", async (request, response) => {
       success: true,
       message: "Pet deleted",
       data: { pets: petDeleted },
-      token: res.locals.newToken,
+      token: response.locals.newToken,
     });
   } catch (error) {
     response.status(error.status || 500);
@@ -77,7 +77,7 @@ router.patch("/:id", async (request, response) => {
       success: true,
       message: "Pet updated",
       data: { pets: petUpdated },
-      token: res.locals.newToken,
+      token: response.locals.newToken,
     });
   } catch (error) {
     response.status(error.status || 500);
