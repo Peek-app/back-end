@@ -11,12 +11,12 @@ async function create(data) {
 }
 
 async function getAll() {
-  const appointments = await Appointment.find({});
+  const appointments = await Appointment.find({}).populate("petId");
   return appointments;
 }
 
 async function getById(id) {
-  const appointment = await Appointment.findById(id);
+  const appointment = await Appointment.findById(id).populate("petId");
   return appointment;
 }
 

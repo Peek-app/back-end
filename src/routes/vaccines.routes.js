@@ -10,11 +10,17 @@ router.post("/", async (request, response) => {
     const newVaccine = await vaccinesUseCases.create(vaccineData);
     response.json({
       success: true,
-      message: "Vaccine is created",
-      data: { vaccines: newVaccine },
+      message: "Vaccine created",
+      data: { vaccine: newVaccine },
     });
   } catch (error) {
-    response.status(error.status || 500);
+    if (error.status) {
+      response.status(error.status);
+    } else if (error.name === "ValidationError") {
+      response.status(400);
+    } else {
+      response.status(500);
+    }
     response.json({
       success: false,
       message: error.message,
@@ -32,6 +38,30 @@ router.get("/", async (request, response) => {
     });
   } catch (error) {
     response.status(error.status || 500);
+    response.json({
+      success: false,
+      message: error.message,
+    });
+  }
+});
+
+router.get("/pet/:petId", async (request, response) => {
+  try {
+    const petId = request.params.petId;
+    const vaccines = await vaccinesUseCases.getByPetId(petId);
+    response.json({
+      success: true,
+      message: "Vaccines for pet",
+      data: { vaccines },
+    });
+  } catch (error) {
+    if (error.status) {
+      response.status(error.status);
+    } else if (error.name === "CastError") {
+      response.status(400);
+    } else {
+      response.status(500);
+    }
     response.json({
       success: false,
       message: error.message,

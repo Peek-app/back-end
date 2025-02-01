@@ -16,7 +16,7 @@ async function create(data) {
 }
 
 async function getAll() {
-  const vets = await Vet.find({});
+  const vets = await Vet.find({}).populate("user", "name lastName");
   return vets;
 }
 
