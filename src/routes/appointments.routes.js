@@ -41,6 +41,24 @@ router.get("/", async (request, response) => {
   }
 });
 
+router.get("/pet/:petId", async (request, response) => {
+  try {
+    const petId = request.params.petId;
+    const appointments = await appointmentsUseCases.getByPetId(petId);
+    response.json({
+      success: true,
+      message: "Vaccines for pet",
+      data: { appointments },
+    });
+  } catch (error) {
+    response.status(error.status || 500);
+    response.json({
+      success: false,
+      message: error.message,
+    });
+  }
+});
+
 router.get("/:id", async (request, response) => {
   try {
     const id = request.params.id;

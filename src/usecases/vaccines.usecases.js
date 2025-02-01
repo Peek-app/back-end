@@ -15,6 +15,11 @@ async function getAll() {
   return vaccines;
 }
 
+async function getByPetId(petId) {
+  const vaccines = await Vaccines.find({ petId }).populate("petId");
+  return vaccines;
+}
+
 async function deleteById(id, userId) {
   const existingVaccine = await Vaccines.findById(id);
 
@@ -39,4 +44,4 @@ async function updateById(id, newData) {
   return vaccineUpdated;
 }
 
-module.exports = { create, getAll, deleteById, updateById };
+module.exports = { create, getAll, getByPetId, deleteById, updateById };
