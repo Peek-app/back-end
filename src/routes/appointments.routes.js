@@ -47,7 +47,28 @@ router.get("/pet/:petId", async (request, response) => {
     const appointments = await appointmentsUseCases.getByPetId(petId);
     response.json({
       success: true,
-      message: "Vaccines for pet",
+      message: "Appointments for pet",
+      data: { appointments },
+    });
+  } catch (error) {
+    response.status(error.status || 500);
+    response.json({
+      success: false,
+      message: error.message,
+    });
+  }
+});
+
+router.get("/owner/:ownerId", auth, async (request, response) => {
+  try {
+    const ownerId = request.params.ownerId;
+    const appointments = await appointmentsUseCases.getAppointmentsByOwnerId(
+      ownerId
+    );
+
+    response.json({
+      success: true,
+      message: "Appointments for owner's pets",
       data: { appointments },
     });
   } catch (error) {

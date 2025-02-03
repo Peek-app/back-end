@@ -1,6 +1,7 @@
 const createError = require("http-errors");
 
 const Appointment = require("../models/appointments.model");
+const Pet = require("../models/pets.model");
 
 async function create(data) {
   if (!data) {
@@ -12,6 +13,17 @@ async function create(data) {
 
 async function getAll() {
   const appointments = await Appointment.find({}).populate("petId");
+  return appointments;
+}
+
+async function getAppointmentsByOwnerId(ownerId) {
+  const pets = await Pet.find({ petOwner: ownerId }).select("_id");
+  const petIds = pets.map((pet) => pet._id);
+
+  const appointments = await Appointment.find({ petId: { $in: petIds } })
+    .populate("petId")
+    .populate("vetId");
+
   return appointments;
 }
 
@@ -54,4 +66,5 @@ module.exports = {
   deleteById,
   getById,
   getByPetId,
+  getAppointmentsByOwnerId,
 };
