@@ -17,12 +17,16 @@ async function getAll() {
 }
 
 async function getAppointmentsByOwnerId(ownerId) {
+  console.log("Owner ID:", ownerId);
   const pets = await Pet.find({ petOwner: ownerId }).select("_id");
+  console.log("Pets found:", pets);
   const petIds = pets.map((pet) => pet._id);
+  console.log("Pet IDs:", petIds);
 
   const appointments = await Appointment.find({ petId: { $in: petIds } })
     .populate("petId")
     .populate("vetId");
+  console.log("Appointments found:", appointments);
 
   return appointments;
 }
