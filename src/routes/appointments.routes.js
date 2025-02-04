@@ -62,9 +62,11 @@ router.get("/pet/:petId", async (request, response) => {
 router.get("/owner/:ownerId", auth, async (request, response) => {
   try {
     const ownerId = request.params.ownerId;
+    console.log("Request for owner ID:", ownerId);
     const appointments = await appointmentsUseCases.getAppointmentsByOwnerId(
       ownerId
     );
+    console.log("Appointments returned:", appointments);
 
     response.json({
       success: true,
@@ -72,6 +74,7 @@ router.get("/owner/:ownerId", auth, async (request, response) => {
       data: { appointments },
     });
   } catch (error) {
+    console.error("Error fetching appointments:", error);
     response.status(error.status || 500);
     response.json({
       success: false,
