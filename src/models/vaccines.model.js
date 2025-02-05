@@ -11,7 +11,6 @@ const vaccineSchema = new mongoose.Schema({
   },
   appliedBy: {
     type: String,
-    required: true,
     minLength: 2,
   },
   petId: {
