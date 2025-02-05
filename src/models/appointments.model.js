@@ -21,7 +21,6 @@ const appointmentsSchema = new mongoose.Schema({
   vetId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "vets",
-    required: true,
   },
   createdAt: {
     type: Date,
