@@ -7,6 +7,16 @@ async function create(data) {
   if (!data) {
     throw createError(400, "All fields are mandatory");
   }
+
+  // Obtener el pet y su vetId
+  const pet = await Pet.findById(data.petId);
+  if (!pet) {
+    throw createError(404, "Pet not found");
+  }
+
+  // Incluir el vetId en los datos del appointment
+  data.vetId = pet.vet;
+
   const appointment = await Appointment.create(data);
   return appointment;
 }
