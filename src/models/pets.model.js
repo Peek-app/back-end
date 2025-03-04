@@ -28,7 +28,7 @@ const petSchema = new mongoose.Schema({
   petOwner: {
     type: mongoose.Schema.Types.ObjectId,
     required: false,
-    ref: "owners",
+    ref: "users",
   },
   vet: {
     type: mongoose.Schema.Types.ObjectId,
